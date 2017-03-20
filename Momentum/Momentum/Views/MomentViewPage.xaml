@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converters="clr-namespace:Momentum.Converters;assembly=Momentum"
+             x:Class="Momentum.Views.MomentViewPage"
+             NavigationPage.HasNavigationBar="false">
+  <ContentPage.Resources>
+    <ResourceDictionary>
+      <converters:AddressConverter x:Key="AddressConverter" />
+      <converters:InverseBoolConverter x:Key="InverseBoolConverter" />
+    </ResourceDictionary>
+  </ContentPage.Resources>
+
+  <Grid>
+    <Image
+      x:Name="MomentImage"
+      Aspect="AspectFill"
+      Source="{Binding MomentImageSource}"
+      HorizontalOptions="FillAndExpand"
+      VerticalOptions="FillAndExpand" />
+
+    <ActivityIndicator
+      IsRunning="{Binding IsBusy}"
+      VerticalOptions="Center"
+      HorizontalOptions="Center"/>
+
+    <AbsoluteLayout
+      x:Name="ButtonOverlay"
+      IsVisible="False"
+      HorizontalOptions="FillAndExpand"
+      VerticalOptions="FillAndExpand"
+      Padding="10">
+
+      <StackLayout
+        BackgroundColor="White"
+        Opacity="0.9"
+        Padding="5"
+        AbsoluteLayout.LayoutFlags="PositionProportional"
+        AbsoluteLayout.LayoutBounds="0, 0, AutoSize, AutoSize">
+        <Label
+          TextColor="Black"
+          Text="{Binding MomentAddress, Converter={StaticResource AddressConverter}}" />
+      </StackLayout>
+
+      <Image
+        Source="ic_favorite_white_24dp.png"
+        AbsoluteLayout.LayoutFlags="PositionProportional"
+        AbsoluteLayout.LayoutBounds="0, 1, AutoSize, AutoSize">
+        <Image.GestureRecognizers>
+          <TapGestureRecognizer Command="{Binding ThanksCommand}"/>
+        </Image.GestureRecognizers>
+      </Image>
+
+      <Image
+        Source="ic_report_white_24dp.png"
+        AbsoluteLayout.LayoutFlags="PositionProportional"
+        AbsoluteLayout.LayoutBounds="1, 1, AutoSize, AutoSize">
+        <Image.GestureRecognizers>
+          <TapGestureRecognizer Command="{Binding ReportCommand}"/>
+        </Image.GestureRecognizers>
+      </Image>
+    </AbsoluteLayout>
+  </Grid>
+</ContentPage>

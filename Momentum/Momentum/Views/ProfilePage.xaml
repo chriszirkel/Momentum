@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ic="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin.Abstractions"
+             xmlns:controls="clr-namespace:Momentum.Controls;assembly=Momentum"
+             x:Class="Momentum.Views.ProfilePage"
+             NavigationPage.HasNavigationBar="true"
+             BackgroundColor="White">
+  <ContentPage.Content>
+    <Grid>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="*" />
+      </Grid.RowDefinitions>
+      
+      <StackLayout Grid.Row="0">
+        <ic:CircleImage
+          Source="{Binding ProfileImageSource}"
+          Aspect="AspectFill"
+          WidthRequest="150"
+          HeightRequest="150"
+          VerticalOptions="Center">
+        </ic:CircleImage>
+
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+          </Grid.ColumnDefinitions>
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+          </Grid.RowDefinitions>
+
+          <Label Grid.Column="0" Grid.Row="0" Text="Sent Moments" />
+          <Label Grid.Column="0" Grid.Row="1" Text="{Binding SentMomentsCount}" />
+
+          <Label Grid.Column="1" Grid.Row="0" Text="Received Moments" />
+          <Label Grid.Column="1" Grid.Row="1" Text="{Binding ReceivedMomentsCount}" />
+
+          <Label Grid.Column="2" Grid.Row="0" Text="Sent Thanks" />
+          <Label Grid.Column="2" Grid.Row="1" Text="{Binding SentThanksCount}" />
+
+          <Label Grid.Column="3" Grid.Row="0" Text="Received Thanks" />
+          <Label Grid.Column="3" Grid.Row="1" Text="{Binding ReceivedThanksCount}" />
+        </Grid>
+      </StackLayout>
+
+      <controls:GridView 
+        x:Name="MomentGrid"
+        Grid.Row="1" 
+        ItemsSource="{Binding SentMoments}">
+        <controls:GridView.ItemTemplate>
+          <DataTemplate>
+            <controls:MomentImageCell Source="{Binding Result}" />
+
+            <!--<ViewCell>
+              <Image Source="{Binding Result}" />
+            </ViewCell>-->
+          </DataTemplate>
+        </controls:GridView.ItemTemplate>
+      </controls:GridView>
+
+    </Grid>
+  </ContentPage.Content>
+
+  <ContentPage.ToolbarItems>
+    <ToolbarItem Icon="ic_notifications_white_24dp.png" Text="Notifications" Command="{Binding NotificationsCommand}" Priority="0" Order="Primary" />
+    <ToolbarItem Icon="ic_settings_white_24dp.png" Text="Settings" Command="{Binding SettingsCommand}" Priority="0" Order="Primary" />
+    <ToolbarItem Icon="ic_bug_report_white_24dp.png" Text="Debug" Command="{Binding DebugCommand}" Clicked="OnDebug" Priority="0" Order="Primary" />
+  </ContentPage.ToolbarItems>
+</ContentPage>

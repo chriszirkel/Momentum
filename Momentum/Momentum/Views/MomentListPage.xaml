@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converters="clr-namespace:Momentum.Converters;assembly=Momentum"
+             xmlns:controls="clr-namespace:Momentum.Controls;assembly=Momentum"
+             x:Class="Momentum.Views.MomentListPage"
+             >
+  <ContentPage.Resources>
+    <ResourceDictionary>
+      <converters:AddressConverter x:Key="AddressConverter" />
+      <converters:HumanizeDateTimeConverter x:Key="HumanizeDateTimeConverter" />
+    </ResourceDictionary>
+  </ContentPage.Resources>
+
+  <!--<AbsoluteLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+    <StackLayout AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">-->
+  <!--<Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>-->
+
+  <StackLayout Orientation="Vertical" Spacing="0">
+    <controls:NavigationBar />
+
+    <ListView
+      x:Name="MomentListView"
+      ItemsSource="{Binding Moments}"
+      IsPullToRefreshEnabled="true"
+      BackgroundColor="White"
+      VerticalOptions="FillAndExpand">
+      <ListView.ItemTemplate>
+        <DataTemplate>
+          <ViewCell>
+            <StackLayout BackgroundColor="#eee" Orientation="Vertical">
+              <Label Text="{Binding Address, Converter={StaticResource AddressConverter}}" TextColor="#f35e20" />
+              <Label Text="{Binding Timestamp, Converter={StaticResource HumanizeDateTimeConverter}}" TextColor="#f35e20" />
+            </StackLayout>
+          </ViewCell>
+        </DataTemplate>
+      </ListView.ItemTemplate>
+    </ListView>
+  </StackLayout>
+  <!--</StackLayout>
+
+    <ActivityIndicator IsRunning="{Binding IsBusy}" AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="0.5, 0.5, AutoSize, AutoSize" />-->
+  <!--</AbsoluteLayout>-->
+</ContentPage>

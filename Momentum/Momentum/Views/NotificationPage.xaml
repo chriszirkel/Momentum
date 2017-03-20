@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converters="clr-namespace:Momentum.Converters;assembly=Momentum"
+             x:Class="Momentum.Views.NotificationPage">
+  <ContentPage.Resources>
+    <ResourceDictionary>
+      <converters:CountryCodeConverter x:Key="CountryCodeConverter" />
+      <converters:PositionConverter x:Key="PositionConverter" />
+      <converters:HumanizeDateTimeConverter x:Key="HumanizeDateTimeConverter" />
+    </ResourceDictionary>
+  </ContentPage.Resources>
+
+  <StackLayout Orientation="Vertical" Spacing="0">
+    <StackLayout Orientation="Horizontal" BackgroundColor="Black">
+      <Label Text="Notifications" TextColor="White" />
+      <Label Text="X" TextColor="White" HorizontalOptions="EndAndExpand" />
+    </StackLayout>
+    
+      <ListView
+        x:Name="NotificationListView"
+        ItemsSource="{Binding Notifications}"
+        IsPullToRefreshEnabled="true"
+        BackgroundColor="White"
+        VerticalOptions="FillAndExpand">
+        <ListView.ItemTemplate>
+          <DataTemplate>
+            <ViewCell>
+              <StackLayout BackgroundColor="#eee" Orientation="Vertical">
+                
+                <StackLayout Orientation="Horizontal">
+                  <Label Text="{Binding City}" TextColor="#503026" />
+                  <Label Text="{Binding CountryCode, Converter={StaticResource CountryCodeConverter}}" TextColor="#503026" />
+                </StackLayout>
+                
+                  <Label Text="{Binding Timestamp, Converter={StaticResource HumanizeDateTimeConverter}}" TextColor="#f35e20" />
+              </StackLayout>
+            </ViewCell>
+          </DataTemplate>
+        </ListView.ItemTemplate>
+      </ListView>
+    </StackLayout>
+</ContentPage>

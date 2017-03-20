@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:Momentum.Controls;assembly=Momentum"
+             x:Class="Momentum.Views.SignInPage"
+             NavigationPage.HasNavigationBar="false">
+  <ContentPage.Content>
+    <StackLayout Spacing="25">
+      <Button Text="Sign In with Google" Command="{Binding LoginGoogleCommand}" />
+      <Button Text="Sign In with Twitter" Command="{Binding LoginTwitterCommand}" />
+      <Button Text="Sign In with Facebook" Command="{Binding LoginFacebookCommand}" />
+
+      <controls:FacebookLoginButton 
+        x:Name="facebookLoginButton" 
+        Text="Login With Facebook" 
+        VerticalOptions="Start"
+        HorizontalOptions="FillAndExpand" />
+    </StackLayout>
+  </ContentPage.Content>
+</ContentPage>
