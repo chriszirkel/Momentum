@@ -84,14 +84,14 @@ namespace Momentum.Services
             Credentials.RemoveLogin("graph.facebook.com");
         }
 
-        public async Task<IEnumerable<Moment>> GetLatestMomentsAsync()
+        public async Task<IEnumerable<Models.Aws.Moment>> GetLatestMomentsAsync()
         {
-            List<Moment> moments = new List<Moment>();
+            List<Models.Aws.Moment> moments = new List<Models.Aws.Moment>();
 
             var filter = new QueryFilter();
-            filter.AddCondition("date", QueryOperator.Equal, DateTime.UtcNow.ToDateString());
+            filter.AddCondition("date", QueryOperator.LessThanOrEqual, DateTime.UtcNow.ToDateString());
 
-            var query = DBContext.FromQueryAsync<Moment>(new QueryOperationConfig()
+            var query = DBContext.FromQueryAsync<Models.Aws.Moment>(new QueryOperationConfig()
             {
                 IndexName = "date-time-index",
                 Filter = filter,
@@ -101,19 +101,19 @@ namespace Momentum.Services
             var result = await query.GetRemainingAsync();
             moments.AddRange(result);
 
-            filter = new QueryFilter();
-            filter.AddCondition("date", QueryOperator.Equal, DateTime.UtcNow.AddDays(-1).ToDateString());
-            filter.AddCondition("time", QueryOperator.GreaterThanOrEqual, DateTime.UtcNow.AddDays(-1).ToDateString());
+            //filter = new QueryFilter();
+            //filter.AddCondition("date", QueryOperator.Equal, DateTime.UtcNow.AddDays(-1).ToDateString());
+            //filter.AddCondition("time", QueryOperator.GreaterThanOrEqual, DateTime.UtcNow.AddDays(-1).ToDateString());
 
-            query = DBContext.FromQueryAsync<Moment>(new QueryOperationConfig()
-            {
-                IndexName = "date-time-index",
-                Filter = filter,
-                BackwardSearch = true,
-            });
+            //query = DBContext.FromQueryAsync<Moment>(new QueryOperationConfig()
+            //{
+            //    IndexName = "date-time-index",
+            //    Filter = filter,
+            //    BackwardSearch = true,
+            //});
 
-            result = await query.GetRemainingAsync();
-            moments.AddRange(result);
+            //result = await query.GetRemainingAsync();
+            //moments.AddRange(result);
 
             return moments;
         }

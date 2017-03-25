@@ -17,6 +17,7 @@ using Xamarin.Facebook.Login;
 using Android.Content;
 using ImageCircle.Forms.Plugin.Droid;
 using Xamarin.Forms.Platform.Android;
+using Plugin.Permissions;
 
 namespace Momentum.Droid
 {
@@ -105,6 +106,11 @@ namespace Momentum.Droid
         {
             base.OnActivityResult(requestCode, resultCode, data);
             FacebookCallbackManager.OnActivityResult(requestCode, (int)resultCode, data);
+        }
+
+        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Permission[] grantResults)
+        {
+            PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
 
         //internal void SetPlatformCallback(DroidPlatform platform)

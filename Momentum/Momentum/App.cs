@@ -1,10 +1,15 @@
-﻿using Momentum.Helpers;
+﻿//using BottomBar.XamarinForms;
+//using Momentum.Controls;
+using BottomBar.XamarinForms;
+using Momentum.Helpers;
 using Momentum.Models;
 using Momentum.Platform;
 using Momentum.Primitives;
 using Momentum.Services;
 using Momentum.Views;
 using Plugin.Geolocator;
+using Plugin.Permissions;
+using Plugin.Permissions.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,8 +25,7 @@ namespace Momentum
     {
         private static CarouselPage carouselPage;
         private static MomentListPage momentListPage;
-        //private static CameraPreviewPage cameraPreviewPage;
-        //private static CameraPage cameraPage;
+        private static CameraPage cameraPage;
         private static ProfilePage profilePage;
 
         public static int ScreenWidth;
@@ -80,24 +84,76 @@ namespace Momentum
         public NavigationPage FetchMainUI()
         {
             momentListPage = new MomentListPage();
-            //cameraPage =  new CameraPage();
+            cameraPage = new CameraPage();
             //cameraPreviewPage = new CameraPreviewPage();
             profilePage = new ProfilePage();
 
-            carouselPage = new CarouselPage
-            {
-                Children = {
-                    momentListPage,
-                    //cameraPage,
-                    //cameraPreviewPage,
-                    profilePage
-                },
-                CurrentPage = momentListPage,
-            };
+            //carouselPage = new CarouselPage
+            //{
+            //    Children = {
+            //        momentListPage,
+            //        //cameraPage,
+            //        //cameraPreviewPage,
+            //        profilePage
+            //    },
+            //    CurrentPage = momentListPage,
+            //};
 
-            var navigationPage = new NavigationPage(carouselPage);
+            BottomBarPage bottomBarPage = new BottomBarPage();
+            bottomBarPage.BarBackgroundColor = Color.Pink;
 
-            NavigationPage.SetHasNavigationBar(momentListPage, true);
+            bottomBarPage.Children.Add(momentListPage);
+            momentListPage.Title = "Moments";
+            momentListPage.Icon = (FileImageSource)ImageSource.FromFile("earth.png");
+            //momentListPage.SetTabColor(Color.FromHex("#5D4037"));
+
+            bottomBarPage.Children.Add(cameraPage);
+            cameraPage.Title = "Camera";
+            cameraPage.Icon = (FileImageSource)ImageSource.FromFile("camera.png");
+            //cameraPage.SetTabColor(Color.FromHex("#5D4037"));
+
+            bottomBarPage.Children.Add(profilePage);
+            profilePage.Title = "Profile";
+            profilePage.Icon = (FileImageSource)ImageSource.FromFile("face.png");
+            //profilePage.SetTabColor(Color.FromHex("#5D4037"));
+
+            NavigationPage.SetHasNavigationBar(cameraPage, false);
+            var navigationPage = new NavigationPage(bottomBarPage);
+            //NavigationPage navigationPage = null;
+
+            //string[] tabTitles = { "Favorites", "Friends", "Nearby", "Recents", "Restaurants" };
+            //string[] tabColors = { null, "#5D4037", "#7B1FA2", "#FF5252", "#FF9800" };
+
+            //for (int i = 0; i < tabTitles.Length; ++i)
+            //{
+            //    string title = tabTitles[i];
+            //    string tabColor = tabColors[i];
+
+            //FileImageSource icon = (FileImageSource)ImageSource.FromFile(string.Format("ic_{0}.png", title.ToLowerInvariant()));
+
+            //    // create tab page
+            //    var tabPage = new TabPage()
+            //    {
+            //        Title = title,
+            //        Icon = icon
+            //    };
+
+            //    // set tab color
+            //    if (tabColor != null)
+            //    {
+            //        tabPage.SetTabColor(Color.FromHex(tabColor));
+            //    }
+
+            //    // set label based on title
+            //    tabPage.UpdateLabel();
+
+            //    // add tab pag to tab control
+            //    bottomBarPage.Children.Add(tabPage);
+            //}
+
+
+
+            //NavigationPage.SetHasNavigationBar(momentListPage, true);
             //NavigationPage.SetHasNavigationBar(cameraPage, true);
 
             //NavigationPage.SetHasNavigationBar(carouselPage, false);
@@ -106,47 +162,47 @@ namespace Momentum
             //    BarTextColor = Colors.NavigationBarTextColor
             //};
 
-            carouselPage.PropertyChanged += (object sender, PropertyChangedEventArgs e) =>
-            {
-                if (e.PropertyName == "CurrentPage")
-                {
-                    if (carouselPage.CurrentPage == momentListPage)
-                    {
-                        //NavigationPage.SetHasNavigationBar(carouselPage, true);
-                        //carouselPage.Title = "Moments";
-                    }
-                    //else if (carouselPage.CurrentPage == cameraPage)
-                    //{
-                    //    //NavigationPage.SetHasNavigationBar(carouselPage, false);
-                    //    //carouselPage.Title = "Camera";
-                    //}
-                    else if (carouselPage.CurrentPage == profilePage)
-                    {
-                        //NavigationPage.SetHasNavigationBar(carouselPage, true);
-                        //carouselPage.Title = "Profile";
-                        //await profilePage.ViewModel.InitializeAsync();
-                    }
+            //carouselPage.PropertyChanged += (object sender, PropertyChangedEventArgs e) =>
+            //{
+            //    if (e.PropertyName == "CurrentPage")
+            //    {
+            //        if (carouselPage.CurrentPage == momentListPage)
+            //        {
+            //            //NavigationPage.SetHasNavigationBar(carouselPage, true);
+            //            //carouselPage.Title = "Moments";
+            //        }
+            //        //else if (carouselPage.CurrentPage == cameraPage)
+            //        //{
+            //        //    //NavigationPage.SetHasNavigationBar(carouselPage, false);
+            //        //    //carouselPage.Title = "Camera";
+            //        //}
+            //        else if (carouselPage.CurrentPage == profilePage)
+            //        {
+            //            //NavigationPage.SetHasNavigationBar(carouselPage, true);
+            //            //carouselPage.Title = "Profile";
+            //            //await profilePage.ViewModel.InitializeAsync();
+            //        }
 
-                    //var currentPageType = carouselPage.CurrentPage.GetType();
+            //        //var currentPageType = carouselPage.CurrentPage.GetType();
 
-                    //if (currentPageType == typeof(MomentListPage))
-                    //{
-                    //    //NavigationPage.SetHasNavigationBar(carouselPage, true);
-                    //    //carouselPage.Title = "Moments";
-                    //}
-                    //else if (currentPageType == typeof(CameraPage))
-                    //{
-                    //    //NavigationPage.SetHasNavigationBar(carouselPage, false);
-                    //    //carouselPage.Title = "Camera";
-                    //}
-                    //else if (currentPageType == typeof(ProfilePage))
-                    //{
-                    //    //NavigationPage.SetHasNavigationBar(carouselPage, true);
-                    //    //carouselPage.Title = "Profile";
+            //        //if (currentPageType == typeof(MomentListPage))
+            //        //{
+            //        //    //NavigationPage.SetHasNavigationBar(carouselPage, true);
+            //        //    //carouselPage.Title = "Moments";
+            //        //}
+            //        //else if (currentPageType == typeof(CameraPage))
+            //        //{
+            //        //    //NavigationPage.SetHasNavigationBar(carouselPage, false);
+            //        //    //carouselPage.Title = "Camera";
+            //        //}
+            //        //else if (currentPageType == typeof(ProfilePage))
+            //        //{
+            //        //    //NavigationPage.SetHasNavigationBar(carouselPage, true);
+            //        //    //carouselPage.Title = "Profile";
 
-                    //}
-                }
-            };
+            //        //}
+            //    }
+            //};
 
             return navigationPage;
         }
@@ -165,6 +221,66 @@ namespace Momentum
             {
                 MainPage = new SignInPage();
                 //MainPage = FetchMainUI();
+            }
+
+            try
+            {
+                var status = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Storage);
+                if (status != PermissionStatus.Granted)
+                {
+                    if (await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Permission.Storage))
+                    {
+                        //await DisplayAlert("Need location", "Gunna need that location", "OK");
+                    }
+
+                    var results = await CrossPermissions.Current.RequestPermissionsAsync(new[] { Permission.Storage });
+                    status = results[Permission.Storage];
+                }
+
+                if (status == PermissionStatus.Granted)
+                {
+                    //var results = await CrossGeolocator.Current.GetPositionAsync(10000);
+                    //LabelGeolocation.Text = "Lat: " + results.Latitude + " Long: " + results.Longitude;
+                }
+                else if (status != PermissionStatus.Unknown)
+                {
+                    //await DisplayAlert("Location Denied", "Can not continue, try again.", "OK");
+                }
+            }
+            catch (Exception ex)
+            {
+
+                //LabelGeolocation.Text = "Error: " + ex;
+            }
+
+            try
+            {
+                var status = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Camera);
+                if (status != PermissionStatus.Granted)
+                {
+                    if (await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Permission.Camera))
+                    {
+                        //await DisplayAlert("Need location", "Gunna need that location", "OK");
+                    }
+
+                    var results = await CrossPermissions.Current.RequestPermissionsAsync(new[] { Permission.Camera });
+                    status = results[Permission.Camera];
+                }
+
+                if (status == PermissionStatus.Granted)
+                {
+                    //var results = await CrossGeolocator.Current.GetPositionAsync(10000);
+                    //LabelGeolocation.Text = "Lat: " + results.Latitude + " Long: " + results.Longitude;
+                }
+                else if (status != PermissionStatus.Unknown)
+                {
+                    //await DisplayAlert("Location Denied", "Can not continue, try again.", "OK");
+                }
+            }
+            catch (Exception ex)
+            {
+
+                //LabelGeolocation.Text = "Error: " + ex;
             }
 
             await SetupGeolocator();

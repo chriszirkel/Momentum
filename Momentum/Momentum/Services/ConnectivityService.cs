@@ -11,7 +11,7 @@ namespace Momentum.Services
     {
         public static async Task<bool> IsConnected()
         {
-            return await CrossConnectivity.Current.IsRemoteReachable(Constants.ApplicationHost, 80, 5000);
+            return await CrossConnectivity.Current.IsRemoteReachable(Constants.Host, 80, 5000);
         }
     }
 }
