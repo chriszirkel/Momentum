@@ -88,17 +88,6 @@ namespace Momentum
             //cameraPreviewPage = new CameraPreviewPage();
             profilePage = new ProfilePage();
 
-            //carouselPage = new CarouselPage
-            //{
-            //    Children = {
-            //        momentListPage,
-            //        //cameraPage,
-            //        //cameraPreviewPage,
-            //        profilePage
-            //    },
-            //    CurrentPage = momentListPage,
-            //};
-
             BottomBarPage bottomBarPage = new BottomBarPage();
             bottomBarPage.BarBackgroundColor = Color.Pink;
 
