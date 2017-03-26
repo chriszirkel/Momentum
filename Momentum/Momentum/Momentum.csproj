@@ -58,10 +58,6 @@
     <Compile Include="Extensions\ObservableExtensions.cs" />
     <Compile Include="Helpers\AsyncImageSource.cs" />
     <Compile Include="Helpers\NotifyTask.cs" />
-    <Compile Include="Models\Aws\Moment.cs" />
-    <Compile Include="Models\Aws\Report.cs" />
-    <Compile Include="Models\Aws\Thanks.cs" />
-    <Compile Include="Models\Aws\User.cs" />
     <Compile Include="Models\Sql\SentMoment.cs" />
     <Compile Include="Models\Report.cs" />
     <Compile Include="Models\Thanks.cs" />

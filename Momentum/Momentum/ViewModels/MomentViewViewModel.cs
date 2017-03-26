@@ -14,7 +14,7 @@ namespace Momentum.ViewModels
         private Command reportCommand;
 
         private Moment moment;
-        private IUser user;
+        private User user;
 
         public string MomentImageSource
         {

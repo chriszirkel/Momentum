@@ -16,12 +16,22 @@ namespace Momentum.Models
         int ReceivedThanksCount { get; set; }
     }
 
+    [DynamoDBTable("momentum-mobilehub-268650841-users")]
     public class User : IUser
     {
+        [DynamoDBHashKey("userId")]
         public string UserId { get; set; }
+
+        [DynamoDBProperty("sentMomentsCount")]
         public int SentMomentsCount { get; set; }
+
+        [DynamoDBProperty("receivedMomentsCount")]
         public int ReceivedMomentsCount { get; set; }
+
+        [DynamoDBProperty("sentThanksCount")]
         public int SentThanksCount { get; set; }
+
+        [DynamoDBProperty("receivedThanksCount")]
         public int ReceivedThanksCount { get; set; }
     }
 }

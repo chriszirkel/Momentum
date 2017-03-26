@@ -8,10 +8,6 @@ using Amazon.S3.Model;
 using Amazon.S3.Transfer;
 using Momentum.Extensions;
 using Momentum.Models;
-using AwsMoment = Momentum.Models.Aws.Moment;
-using AwsThanks = Momentum.Models.Aws.Thanks;
-using AwsReport = Momentum.Models.Aws.Report;
-using AwsUser = Momentum.Models.Aws.User;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -84,14 +80,14 @@ namespace Momentum.Services
             Credentials.RemoveLogin("graph.facebook.com");
         }
 
-        public async Task<IEnumerable<Models.Aws.Moment>> GetLatestMomentsAsync()
+        public async Task<IEnumerable<Moment>> GetLatestMomentsAsync()
         {
-            List<Models.Aws.Moment> moments = new List<Models.Aws.Moment>();
+            List<Moment> moments = new List<Moment>();
 
             var filter = new QueryFilter();
             filter.AddCondition("date", QueryOperator.LessThanOrEqual, DateTime.UtcNow.ToDateString());
 
-            var query = DBContext.FromQueryAsync<Models.Aws.Moment>(new QueryOperationConfig()
+            var query = DBContext.FromQueryAsync<Moment>(new QueryOperationConfig()
             {
                 IndexName = "date-time-index",
                 Filter = filter,
@@ -163,48 +159,48 @@ namespace Momentum.Services
             return await Credentials.GetIdentityIdAsync();
         }
 
-        public async Task<IUser> GetUserAsync()
+        public async Task<User> GetUserAsync()
         {
             string userId = await GetUserIdAsync();
 
             return await GetUserAsync(userId);
         }
 
-        public async Task<IUser> GetUserAsync(string userId)
+        public async Task<User> GetUserAsync(string userId)
         {
-            return await DBContext.LoadAsync<AwsUser>(userId);
+            return await DBContext.LoadAsync<User>(userId);
         }
 
         public async Task SaveMomentAsync(Moment moment, byte[] momentImage)
         {
-            var awsMoment = moment.Clone<AwsMoment>();
+            //var awsMoment = moment.Clone<AwsMoment>();
 
-            await DBContext.SaveAsync(awsMoment);
-            await TransferUtility.UploadAsync(new MemoryStream(momentImage), Constants.S3BucketName, awsMoment.MomentId);
+            await DBContext.SaveAsync(moment);
+            await TransferUtility.UploadAsync(new MemoryStream(momentImage), Constants.S3BucketName, moment.MomentId);
         }
 
-        public async Task SaveUserAsync(IUser user)
+        public async Task SaveUserAsync(User user)
         {
-            var awsUser = new AwsUser();
-            awsUser.MoveCorresponding<IUser>(awsUser);
+            //var awsUser = new AwsUser();
+            //awsUser.MoveCorresponding<IUser>(awsUser);
 
-            await DBContext.SaveAsync(awsUser);
+            await DBContext.SaveAsync(user);
         }
 
         public async Task SaveThanksAsync(Thanks thanks)
         {
-            var awsThanks = new AwsThanks();
-            awsThanks.MoveCorresponding<IThanks>(awsThanks);
+            //var awsThanks = new AwsThanks();
+            //awsThanks.MoveCorresponding<IThanks>(awsThanks);
 
-            await DBContext.SaveAsync(awsThanks);
+            await DBContext.SaveAsync(thanks);
         }
 
         public async Task SaveReportAsync(Report report)
         {
-            var awsReport = new AwsReport();
-            awsReport.MoveCorresponding<IReport>(awsReport);
+            //var awsReport = new AwsReport();
+            //awsReport.MoveCorresponding<IReport>(awsReport);
 
-            await DBContext.SaveAsync(awsReport);
+            await DBContext.SaveAsync(report);
         }
 
         public async Task DeleteThanksAsync(Thanks thanks)
