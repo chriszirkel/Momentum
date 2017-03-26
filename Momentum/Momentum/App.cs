@@ -23,7 +23,7 @@ namespace Momentum
 {
     public class App : Application
     {
-        private static CarouselPage carouselPage;
+        private static BottomBarPage bottomBarPage;
         private static MomentListPage momentListPage;
         private static CameraPage cameraPage;
         private static ProfilePage profilePage;
@@ -78,7 +78,7 @@ namespace Momentum
 
         public void NavigateToMomentList()
         {
-            carouselPage.CurrentPage = momentListPage;
+            bottomBarPage.CurrentPage = momentListPage;
         }
 
         public NavigationPage FetchMainUI()
@@ -88,7 +88,7 @@ namespace Momentum
             //cameraPreviewPage = new CameraPreviewPage();
             profilePage = new ProfilePage();
 
-            BottomBarPage bottomBarPage = new BottomBarPage();
+            bottomBarPage = new BottomBarPage();
             bottomBarPage.BarBackgroundColor = Color.Pink;
 
             bottomBarPage.Children.Add(momentListPage);
@@ -106,8 +106,9 @@ namespace Momentum
             profilePage.Icon = (FileImageSource)ImageSource.FromFile("face.png");
             //profilePage.SetTabColor(Color.FromHex("#5D4037"));
 
-            NavigationPage.SetHasNavigationBar(cameraPage, false);
+            
             var navigationPage = new NavigationPage(bottomBarPage);
+            NavigationPage.SetHasNavigationBar(bottomBarPage, false);
             //NavigationPage navigationPage = null;
 
             //string[] tabTitles = { "Favorites", "Friends", "Nearby", "Recents", "Restaurants" };
@@ -139,59 +140,6 @@ namespace Momentum
             //    // add tab pag to tab control
             //    bottomBarPage.Children.Add(tabPage);
             //}
-
-
-
-            //NavigationPage.SetHasNavigationBar(momentListPage, true);
-            //NavigationPage.SetHasNavigationBar(cameraPage, true);
-
-            //NavigationPage.SetHasNavigationBar(carouselPage, false);
-            //{
-            //    BarBackgroundColor = Colors.NavigationBarColor,
-            //    BarTextColor = Colors.NavigationBarTextColor
-            //};
-
-            //carouselPage.PropertyChanged += (object sender, PropertyChangedEventArgs e) =>
-            //{
-            //    if (e.PropertyName == "CurrentPage")
-            //    {
-            //        if (carouselPage.CurrentPage == momentListPage)
-            //        {
-            //            //NavigationPage.SetHasNavigationBar(carouselPage, true);
-            //            //carouselPage.Title = "Moments";
-            //        }
-            //        //else if (carouselPage.CurrentPage == cameraPage)
-            //        //{
-            //        //    //NavigationPage.SetHasNavigationBar(carouselPage, false);
-            //        //    //carouselPage.Title = "Camera";
-            //        //}
-            //        else if (carouselPage.CurrentPage == profilePage)
-            //        {
-            //            //NavigationPage.SetHasNavigationBar(carouselPage, true);
-            //            //carouselPage.Title = "Profile";
-            //            //await profilePage.ViewModel.InitializeAsync();
-            //        }
-
-            //        //var currentPageType = carouselPage.CurrentPage.GetType();
-
-            //        //if (currentPageType == typeof(MomentListPage))
-            //        //{
-            //        //    //NavigationPage.SetHasNavigationBar(carouselPage, true);
-            //        //    //carouselPage.Title = "Moments";
-            //        //}
-            //        //else if (currentPageType == typeof(CameraPage))
-            //        //{
-            //        //    //NavigationPage.SetHasNavigationBar(carouselPage, false);
-            //        //    //carouselPage.Title = "Camera";
-            //        //}
-            //        //else if (currentPageType == typeof(ProfilePage))
-            //        //{
-            //        //    //NavigationPage.SetHasNavigationBar(carouselPage, true);
-            //        //    //carouselPage.Title = "Profile";
-
-            //        //}
-            //    }
-            //};
 
             return navigationPage;
         }

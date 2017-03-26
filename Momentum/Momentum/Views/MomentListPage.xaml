@@ -21,8 +21,6 @@
     </Grid.RowDefinitions>-->
 
   <StackLayout Orientation="Vertical" Spacing="0">
-    <controls:NavigationBar />
-
     <ListView
       x:Name="MomentListView"
       ItemsSource="{Binding Moments}"
